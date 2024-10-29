@@ -6,7 +6,8 @@ import { BlockObjectRequest } from '@notionhq/client/build/src/api-endpoints'
 
 
 export const setDiary = async (req: Request,res: Response) => {
-    const {userId, title, context, files}: {userId: string, title: string, context: string, files: Array<string>} = req.body
+    console.log(req.body)
+    const {userId, title, context, files}: {userId: string, title: string, context: Array<string>, files: Array<string>} = req.body
     console.log(userId)
     const user = await User.findOne({})
     console.log("user")
@@ -25,10 +26,15 @@ export const setDiary = async (req: Request,res: Response) => {
                             }
                         }
                     ]
+                },
+                "날짜": {
+                    date: {
+                        start: new Date().toISOString().split('T')[0]
+                    }
                 }
         	},
         	children: [
-                ...context.split('\n').map((t) => ({
+                ...context.map((t) => ({
                     "object": "block",
                     "type": "paragraph",
                     "paragraph": {

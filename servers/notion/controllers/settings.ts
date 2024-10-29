@@ -9,6 +9,15 @@ export const setDataBase = async (req: Request,res: Response) => {
         await client.databases.query({
             database_id: dId
         })
+        await client.databases.update({
+            database_id: dId,
+            properties: {
+                "날짜": {
+                    type:"date",
+                    date:{}
+                }
+            }       
+        })
         res.send(true)
     }catch (e: unknown){
         if (e instanceof APIResponseError){
