@@ -20,10 +20,13 @@ class User:
     def find_one(q:dict):
         return User.collection.find_one(q)
     
+    def delete_one(id:str):
+        return User.collection.delete_one({"_id":id})
+    
 class Diary:
     collection = db.diary
     def __init__(self, user: dict, context: str, files: list) -> None:
-        d = context.split()
+        d = context.split('\n')
         self.user = user['_id']
         self.title = d[0]
         self.context = d[1:]
